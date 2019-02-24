@@ -16,6 +16,8 @@ RUN curl -OL https://github.com/google/protobuf/releases/download/v3.6.1/protoc-
         go build github.com/golang/protobuf/protoc-gen-go && \
         go install github.com/golang/protobuf/protoc-gen-go && \
         mv $GOPATH/bin/* /usr/local/go/bin/ && \
-        rm -rf $GOPATH
+        rm -rf $GOPATH && \
+        mkdir /pipeline && \
+        chown 777 /pipeline
 
 ENTRYPOINT ["/usr/local/bin/protoc"]
