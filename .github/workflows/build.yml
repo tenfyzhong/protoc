@@ -1,0 +1,16 @@
+name: Build and test protoc image
+on:
+  pull_request:
+  push:
+    branches: [master]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build --progress plain -t protoc-test .
+      - name: Generate and test protobuf and gRPC code
+        run: docker run --rm --entrypoint /bin/bash -v "$PWD/tests:/tests:ro" protoc-test /tests/smoke.sh
